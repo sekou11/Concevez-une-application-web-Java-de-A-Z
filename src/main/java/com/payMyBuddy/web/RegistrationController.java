@@ -1,5 +1,6 @@
 package com.payMyBuddy.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import com.payMyBuddy.service.Auth.UserDetailsServiceImpl;
 public class RegistrationController {
 	private final UserAppService userService;
 	private final UserDetailsServiceImpl  userDetailsService ;
-	
+	@Autowired
 	public RegistrationController(UserAppService userService, UserDetailsServiceImpl userDetailsService) {
 		super();
 		this.userService = userService;
