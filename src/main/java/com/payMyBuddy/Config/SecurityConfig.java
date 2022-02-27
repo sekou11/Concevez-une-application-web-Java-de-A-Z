@@ -1,8 +1,11 @@
 package com.payMyBuddy.Config;
 
-import javax.sql.DataSource;
+import com.payMyBuddy.service.UserAppService;
+import com.payMyBuddy.service.Auth.UserDetailsServiceImpl;
 
-//import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+
+import javax.sql.DataSource;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,12 +21,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import com.payMyBuddy.service.UserAppService;
-import com.payMyBuddy.service.Auth.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
-
+@EnableEncryptableProperties
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserAppService userService;
 
@@ -69,7 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .rememberMe()
-                
+//                .key("abcdEfGhijklmnopqrst123456")
+//                .tokenValiditySeconds(3 * 24 * 60 * 60) //3 days token
                 .tokenRepository(persistentTokenRepository())
                 .and()
                 .logout()

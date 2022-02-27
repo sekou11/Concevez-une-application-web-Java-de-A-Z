@@ -2,9 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+      <script src="/webjars/jquery/3.6.0/dist/jquery.min.js"></script>
+     <script src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script> 
+     <link rel="stylesheet" href="/webjars/font-awesome/6.0.0/css/fontawesome.min.css"></link>  
 
     <title>Connection</title>
 </head>
@@ -14,25 +17,25 @@
     <div class="container justify-content-center w-50 p-3" style="margin-top: 5em;">
     
         <div class="alert alert-success" th:if="${success}">
-            <h1 class="display-5"><span class="alert alert-success">Error</span></h1>
+            <h1 class="display-5">Success</h1>
             <span>Changes were saved successfully. Click <a id="successResult" th:href="@{/home}">here</a> to continue.</span>
         </div>
         
         <div class="alert alert-danger" th:if="${not success} and ${errorType == 1}">
-         <h1 class="display-5"><span class="alert alert-danger">Error</span></h1>
-            <span> Account  not active. Click <a id="errorResult1" th:href="@{/home}">here</a> to continue.</span> 
-            
+            <h1 class="display-5">Error</h1>
+            <span>Your account was not activated. Click <a id="errorResult1" th:href="@{/home}">here</a> to continue.</span>
         </div>
         
         <div class="alert alert-danger" th:if="${not success} and ${errorType == 2}">
-            <h1 class="display-5"><span class="alert alert-danger">Error</span></h1>
-            <span>Connection not found. Click <a id="errorResult2" th:href="@{/home}">here</a> to continue.</span>
+            <h1 class="display-5">Error</h1>
+            <span>Connection not found. Add new connection? Click <a id="errorResult2" th:href="@{/home}">here</a> to continue.</span>
         </div>
         
         <div class="alert alert-danger" th:if="${not success} and ${errorType == 3}" >
-            <h1 class="display-5" ><span class="alert alert-danger">Error</span></h1>
+            <h1 class="display-5">Error</h1>
             <span>Balance not enough. Click <a id="errorResult3" th:href="@{/home}">here</a> to continue.</span>
         </div>
+          
         <div class="alert alert-danger" th:if="${not success} and ${errorType == 4}" >
             <h1 class="display-5">Error</h1>
             <span>The buddy is not our user OR has no account yet. Click <a id="errorResult4" th:href="@{/home}">here</a> to continue.</span>
