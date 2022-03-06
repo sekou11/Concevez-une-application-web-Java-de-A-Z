@@ -1,4 +1,5 @@
-package com.payMyBuddy.web;
+package com.payMyBuddy.Web;
+
 
 import java.math.BigDecimal;
 
@@ -11,24 +12,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.payMyBuddy.Models.Account;
 import com.payMyBuddy.Models.UserApp;
-import com.payMyBuddy.Models.Dto.AccountDto;
-import com.payMyBuddy.Models.Dto.TransactionDto;
-import com.payMyBuddy.service.AccountService;
-import com.payMyBuddy.service.FriendService;
-import com.payMyBuddy.service.UserAppService;
+import com.payMyBuddy.Models.dto.AccountDto;
+import com.payMyBuddy.Models.dto.TransactionDto;
+import com.payMyBuddy.Service.AccountService;
+import com.payMyBuddy.Service.FriendService;
+import com.payMyBuddy.Service.UserService;
 
 @Controller
 @RequestMapping("/account")
 public class AccountController {
 
     private AccountService accountService;
-    private UserAppService userService;
-    private FriendService friendsService;
+    private UserService userService;
+    private FriendService friendService;
 
-    public AccountController(AccountService accountService, UserAppService userService, FriendService friendsService) {
+    public AccountController(AccountService accountService, UserService userService, FriendService friendsService) {
         this.accountService = accountService;
         this.userService = userService;
-        this.friendsService = friendsService;
+        this.friendService = friendsService;
     }
 
     @PostMapping("/edit")
@@ -37,7 +38,6 @@ public class AccountController {
                              Model model) {
         boolean success = false;
         int errorType = 1;
-        
         String email = authentication.getName(); 
 
         if (accountDto.getBalance().compareTo(new BigDecimal(0)) < 0 ) {
@@ -52,7 +52,7 @@ public class AccountController {
         model.addAttribute("success", success);
         model.addAttribute("errorType", errorType);
 
-        return "connection";
+        return "result";
     }
 
     @PostMapping("/transfer")
@@ -65,7 +65,7 @@ public class AccountController {
 
         //1, Get user:
         String email = authentication.getName();
-      UserApp fromUser = userService.findByEmail(email);
+       UserApp fromUser = userService.findByEmail(email);
 
         //2, Get friend:
         String toEmail = transactionDto.getToEmail();
@@ -81,7 +81,7 @@ public class AccountController {
             errorType = 1;
         } else {
             //4, Check if friend is in connections:
-            if (friendsService.isFriend(fromUser.getId(), toUser.getId()) == 1) {
+            if (friendService.isFriend(fromUser.getId(), toUser.getId()) == 1) {
                 isFriend = true;
             }
 
@@ -100,7 +100,7 @@ public class AccountController {
         model.addAttribute("success", success);
         model.addAttribute("errorType", errorType);
 
-        return "connection";
+        return "result";
 
     }
 }

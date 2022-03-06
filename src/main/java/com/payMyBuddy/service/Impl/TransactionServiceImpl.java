@@ -1,4 +1,5 @@
-package com.payMyBuddy.service.Impl;
+package com.payMyBuddy.Service.Impl;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -11,42 +12,42 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.payMyBuddy.DAO.TransactionRepository;
 import com.payMyBuddy.Models.Transaction;
-import com.payMyBuddy.service.TransactionService;
+import com.payMyBuddy.Service.TransactionService;
+
 @Service
 @Transactional
 public class TransactionServiceImpl implements TransactionService {
-	private final TransactionRepository transactionRepository;
+
+    private final TransactionRepository transactionRepository;
 
     @Autowired
     public TransactionServiceImpl(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
-	@Override
-	public Integer save(Transaction transaction) {
-		// TODO Auto-generated method stub
-		return transactionRepository.save(transaction).getId();
-	}
 
-	@Override
-	public List<Transaction> findAll() {
-		// TODO Auto-generated method stub
-		return transactionRepository.findAll();
-	}
+    @Override
+    public Integer save(Transaction transaction) {
+        return transactionRepository.save(transaction).getId();
+    }
 
-	@Override
-	public Optional<Transaction> findById(int id) {
-		// TODO Auto-generated method stub
-		return transactionRepository.findById(id);
-	}
+    @Override
+    public List<Transaction> findAll() {
+        return transactionRepository.findAll();
+    }
 
-	@Override
-	public Page<Transaction> findTransactionsByFromAccount_Id(int id, PageRequest pageRequest) {
-		return transactionRepository.findTransactionsByFromAccount_Id(id, pageRequest);
-	}
+    @Override
+    public Optional<Transaction> findById(int id) {
+        return transactionRepository.findById(id);
+    }
 
-	@Override
-	public List<Transaction> findTransactionsByFromAccount_Id(int id) {
-		 return transactionRepository.findTransactionsByFromAccount_Id(id);
-	}
 
+    @Override
+    public Page<Transaction> findTransactionsByFromAccount_Id(int id, PageRequest pageRequest) {
+        return transactionRepository.findTransactionsByFromAccount_Id(id, pageRequest);
+    }
+
+    @Override
+    public List<Transaction> findTransactionsByFromAccount_Id(int id) {
+        return transactionRepository.findTransactionsByFromAccount_Id(id);
+    }
 }

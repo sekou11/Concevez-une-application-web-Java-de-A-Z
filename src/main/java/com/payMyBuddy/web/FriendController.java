@@ -1,4 +1,5 @@
-package com.payMyBuddy.web;
+package com.payMyBuddy.Web;
+
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -9,18 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.payMyBuddy.Models.Friend;
 import com.payMyBuddy.Models.UserApp;
-import com.payMyBuddy.Models.Dto.FriendDto;
-import com.payMyBuddy.service.FriendService;
-import com.payMyBuddy.service.UserAppService;
+import com.payMyBuddy.Models.dto.FriendDto;
+import com.payMyBuddy.Service.FriendService;
+import com.payMyBuddy.Service.UserService;
 
 @Controller
 @RequestMapping("/friend")
 public class FriendController {
 
-    private UserAppService userService;
+    private UserService userService;
     private FriendService friendsService;
 
-    public FriendController(UserAppService userService, FriendService friendsService) {
+    public FriendController(UserService userService, FriendService friendsService) {
         this.userService = userService;
         this.friendsService = friendsService;
     }
@@ -29,7 +30,7 @@ public class FriendController {
     public String addFriend(Authentication authentication, @ModelAttribute("newFriend") FriendDto friendDto, Model model) {
         //1, Find user first
         String email = authentication.getName();
-        UserApp user = userService.findByEmail(email);
+         UserApp user = userService.findByEmail(email);
         int errorType = 0;
         boolean success = false;
 
@@ -44,14 +45,13 @@ public class FriendController {
             Friend friends = new Friend();
             friends.setUser(user);
             friends.setFriend(friendToBe);
-            
-            friendsService.SaveFriend(friends);
+            friendsService.save(friends);
             success = true;
         }
 
         model.addAttribute("success", success);
         model.addAttribute("errorType", errorType);
 
-        return "connection";
+        return "result";
     }
 }

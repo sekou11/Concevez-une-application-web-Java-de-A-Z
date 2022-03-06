@@ -21,9 +21,10 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "friend")
-public class Friend extends AbstractGlobalClass {
-	@ManyToOne
+@Table(name = "friends")
+public class Friend extends AbstractGloblaEntity {
+
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserApp user;
 

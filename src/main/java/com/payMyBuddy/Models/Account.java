@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "account")
-public class Account extends AbstractGlobalClass {
+public class Account extends AbstractGloblaEntity {
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -38,5 +39,4 @@ public class Account extends AbstractGlobalClass {
 
     @Column(name = "balance")
     private BigDecimal balance;
-
 }

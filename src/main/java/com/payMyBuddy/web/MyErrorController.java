@@ -1,4 +1,5 @@
-package com.payMyBuddy.web;
+package com.payMyBuddy.Web;
+
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -32,3 +33,5 @@ public class MyErrorController implements ErrorController {
         return "error-404";
     }
 }
+
+

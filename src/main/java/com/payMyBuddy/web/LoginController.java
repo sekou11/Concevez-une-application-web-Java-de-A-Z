@@ -1,4 +1,4 @@
-package com.payMyBuddy.web;
+package com.payMyBuddy.Web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

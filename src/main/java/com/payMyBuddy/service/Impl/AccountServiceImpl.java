@@ -1,4 +1,5 @@
-package com.payMyBuddy.service.Impl;
+package com.payMyBuddy.Service.Impl;
+
 
 import java.math.BigDecimal;
 
@@ -8,22 +9,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.payMyBuddy.DAO.AccountRepository;
 import com.payMyBuddy.DAO.TransactionRepository;
-import com.payMyBuddy.DAO.UserAppRepositry;
+import com.payMyBuddy.DAO.UserAppRespository;
 import com.payMyBuddy.Models.Account;
 import com.payMyBuddy.Models.Transaction;
 import com.payMyBuddy.Models.UserApp;
-import com.payMyBuddy.Models.Dto.AccountDto;
-import com.payMyBuddy.service.AccountService;
+import com.payMyBuddy.Models.dto.AccountDto;
+import com.payMyBuddy.Service.AccountService;
 
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
-    private final UserAppRepositry userRepository;
+    private final UserAppRespository userRepository;
 
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository, TransactionRepository transactionRepository, UserAppRepositry userRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository, 
+    		TransactionRepository transactionRepository, 
+    		UserAppRespository userRepository) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
@@ -57,13 +60,13 @@ public class AccountServiceImpl implements AccountService {
         } else {
             if (fromAcc.getBalance().compareTo(BigDecimal.ONE) > 0
                     && fromAcc.getBalance().compareTo(amount) > 0) {
-                
+                // 1, Transfer:
                 fromAcc.setBalance(fromAcc.getBalance().subtract(amount.add(new BigDecimal("0.005").multiply(amount))));
                 accountRepository.save(fromAcc);
                 toAcc.setBalance(toAcc.getBalance().add(amount));
                 accountRepository.save(toAcc);
 
-                
+                // 2, Save a record in app:
                 Transaction transaction = new Transaction();
                 transaction.setFromAccount(fromAcc);
                 transaction.setToAccount(toAcc);
@@ -73,7 +76,7 @@ public class AccountServiceImpl implements AccountService {
                 transaction.setCharge(new BigDecimal("0.005").multiply(amount));
                 transactionRepository.save(transaction);
 
-              
+                // 3, Save a record for user:
                 fromAcc.getTransactions().add(transaction);
 
                 send = true;

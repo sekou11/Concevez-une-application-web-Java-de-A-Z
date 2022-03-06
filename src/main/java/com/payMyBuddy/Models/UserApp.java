@@ -15,33 +15,34 @@ import org.hibernate.Hibernate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import groovy.transform.ToString;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name="user")
-public class UserApp extends AbstractGlobalClass {
+@Table(name = "user")
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class UserApp extends AbstractGloblaEntity {
+	
 
-    @Column(name = "user_name")
-    private String userName;
+	@Column(name = "user_name", nullable = false, length = 20)
+	private String userName;
 
-    @Column(name = "email", unique = true)
-    private String email;
+	@Column(nullable = false, unique = true, length = 45)
+	private String email;
+	
+	private String role;
+	private Boolean enabled=true;
 
-    @Column(name = "password")
-    private String password;
-
-    @OneToOne(mappedBy = "user", orphanRemoval = true, 
-    		   fetch = FetchType.LAZY, 
-    		   cascade = CascadeType.ALL)
+	@Column(nullable = false, length = 64)
+	private String password;
+	@OneToOne(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Account account;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user") 
@@ -52,7 +53,7 @@ public class UserApp extends AbstractGlobalClass {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UserApp user = (UserApp ) o;
+        UserApp user = (UserApp) o;
         return Objects.equals(getId(), user.getId());
     }
 
@@ -68,7 +69,10 @@ public class UserApp extends AbstractGlobalClass {
 		this.password = password;
 	}
 
-	
+	public UserApp(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
 
-	
 }

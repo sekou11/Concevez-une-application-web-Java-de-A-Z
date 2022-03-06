@@ -1,4 +1,5 @@
-package com.payMyBuddy.web;
+package com.payMyBuddy.Web;
+
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,37 +10,40 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.payMyBuddy.Models.Account;
 import com.payMyBuddy.Models.UserApp;
-import com.payMyBuddy.service.AccountService;
-import com.payMyBuddy.service.FriendService;
-import com.payMyBuddy.service.TransactionService;
-import com.payMyBuddy.service.UserAppService;
+import com.payMyBuddy.Service.AccountService;
+import com.payMyBuddy.Service.FriendService;
+import com.payMyBuddy.Service.TransactionService;
+import com.payMyBuddy.Service.UserService;
 
 @Controller
-//@RequestMapping
+@RequestMapping
 public class HomeController {
-    private UserAppService userService;
+    private UserService userService;
     private AccountService accountService;
     private TransactionService transactionService;
-    private FriendService friendsService;
+    private FriendService friendService;
 
-    public HomeController(UserAppService userService, AccountService accountService, TransactionService transactionService, FriendService friendsService) {
+    public HomeController(UserService userService,
+    		AccountService accountService, TransactionService transactionService,
+    		FriendService friendService) {
         this.userService = userService;
         this.accountService = accountService;
         this.transactionService = transactionService;
-        this.friendsService = friendsService;
+        this.friendService = friendService;
     }
 
     @GetMapping({"/", "/home"})
     public String getHome(Authentication authentication,
                           Model model) {
 
-       
-      UserApp user = userService.findByEmail(authentication.getName());
+        
+           UserApp user = userService.findByEmail(authentication.getName());
         String name = user.getUserName();
-        Set<UserApp> myFriends = friendsService.findAllMyFriends(user.getId());
+        Set< UserApp> myFriends = friendService.findAllMyFriends(user.getId());
 
         Account account = accountService.findByUserId(user.getId());
 

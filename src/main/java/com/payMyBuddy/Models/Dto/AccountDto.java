@@ -1,25 +1,25 @@
-package com.payMyBuddy.Models.Dto;
+package com.payMyBuddy.Models.dto;
 
 import java.math.BigDecimal;
 
-import com.payMyBuddy.Models.Account;
-
 public class AccountDto {
-	private Account accountId;
-	private BigDecimal balance;
-	public Account getUserAccount() {
-		return accountId;
-	}
-	public void setUserAccount(Account accountId) {
-		this.accountId = accountId;
-	}
-	public BigDecimal getBalance() {
-		return balance;
-	}
-	public void setBalance(BigDecimal balance) {
-		this.balance = balance;
-	}
-	
-	
 
+    private Integer accountId;
+    private BigDecimal balance;
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
 }

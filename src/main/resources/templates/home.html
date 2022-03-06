@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Pay My Buddy</title>
 </head>
 <body class="d-flex flex-column min-vh-100 p-3 mb-2 bg-light text-black">
-  <body class="d-flex flex-column min-vh-100 p-3 mb-2 bg-light text-black">
     <div th:replace="~{/navbar::topbar}"></div>
 
     <div id="home" class="container main-container">
@@ -86,7 +86,7 @@
                                     <div class="col-md-4">
                                         <label for="toEmail">To Connect: </label>
                                         <select id="toEmail" name="toEmail"  class="custom-select" required>
-                                            <option value="" selected disabled hidden>Select A Connection</option>
+                                            <option value="" selected disabled >Select A Connection</option>
                                             <option th:each="friend : ${friendList}" th:value="${friend.getEmail()}" th:text="${friend.getEmail()}">Email</option>
                                         </select>
                                     </div>
