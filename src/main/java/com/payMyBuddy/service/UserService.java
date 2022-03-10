@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.payMyBuddy.Models.UserApp;
-import com.payMyBuddy.Models.dto.UserDto;
 
 public interface UserService {
 	public List<UserApp> findAll();
@@ -13,9 +12,10 @@ public interface UserService {
 
 	public UserApp findByEmail(String email);
 
-	public UserApp save(UserDto userDto);
-
+	
 	public void deleteById(int id);
 
 	public void deleteByEmail(String email);
+
+	public Integer save(UserApp user);
 }

@@ -9,20 +9,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.payMyBuddy.DAO.UserAppRespository;
 import com.payMyBuddy.Models.UserApp;
-import com.payMyBuddy.Models.dto.UserDto;
 import com.payMyBuddy.Service.UserService;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-	private final UserAppRespository userRepository;
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private  UserAppRespository userRepository;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public UserServiceImpl(UserAppRespository userRepository,
 			BCryptPasswordEncoder bCryptPasswordEncoder) {
 		super();
 		this.userRepository = userRepository;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
+
+	public UserServiceImpl(UserAppRespository userRepository) {
+		super();
+		this.userRepository = userRepository;
 	}
 
 	@Override
@@ -56,13 +60,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserApp save(UserDto userDto) {
-		UserApp user = new UserApp();
-		user.setUserName(userDto.getUserName());
-		user.setEmail(userDto.getEmail());
-		user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-		return userRepository.save(user);
-
+	public Integer save(UserApp user) {
+		  if (user != null) {
+	            UserApp newUser = new UserApp();
+	            newUser.setUserName(user.getUserName());
+	            newUser.setEmail(user.getEmail());
+	            newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	            return userRepository.save(newUser).getId();
+	        }
+	        return null;
+	    }
 	}
 
-}
+	
+
+

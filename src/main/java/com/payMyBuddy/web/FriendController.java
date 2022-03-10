@@ -28,20 +28,20 @@ public class FriendController {
 
     @PostMapping
     public String addFriend(Authentication authentication, @ModelAttribute("newFriend") FriendDto friendDto, Model model) {
-        //1, Find user first
+        
         String email = authentication.getName();
          UserApp user = userService.findByEmail(email);
         int errorType = 0;
         boolean success = false;
 
-        //2, Check if friend is in database or has an account
+        
         String friendEmail = friendDto.getFriendEmail();
         UserApp friendToBe = userService.findByEmail(friendEmail);
 
         if (friendToBe == null || friendToBe.getAccount() == null) {
             errorType = 4;
         } else {
-            //3, Save
+           
             Friend friends = new Friend();
             friends.setUser(user);
             friends.setFriend(friendToBe);
