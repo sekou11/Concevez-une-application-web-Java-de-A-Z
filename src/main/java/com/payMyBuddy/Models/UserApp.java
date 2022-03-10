@@ -17,12 +17,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import groovy.transform.ToString;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Builder
 @Table(name = "user")
 @Getter @Setter
 @NoArgsConstructor
@@ -74,5 +76,7 @@ public class UserApp extends AbstractGloblaEntity {
 		this.email = email;
 		this.password = password;
 	}
+
+	
 
 }

@@ -30,7 +30,8 @@ public class UserAppRespositoryTest {
 	@Order(1)
 	public void testCreateUser() {
 	       
-
+		 UserApp savedUser = repo.save(new UserApp("user1", "user1@email.com", "123456"));
+	     assertThat(savedUser.getId()).isGreaterThan(0);
 
 	}
 	
