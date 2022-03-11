@@ -3,6 +3,7 @@ package com.payMyBuddy.Service.Impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,24 +16,10 @@ import com.payMyBuddy.Service.UserService;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-	private  UserAppRespository userRepository;
-	private BCryptPasswordEncoder bCryptPasswordEncoder =new BCryptPasswordEncoder();
-
-	public UserServiceImpl(UserAppRespository userRepository,
-			BCryptPasswordEncoder bCryptPasswordEncoder) {
-		super();
-		this.userRepository = userRepository;
-		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	}
-
-	public UserServiceImpl(UserAppRespository userRepository) {
-		super();
-		this.userRepository = userRepository;
-	}
-
-	public UserServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
+	@Autowired
+	private UserAppRespository userRepository;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public List<UserApp> findAll() {
@@ -65,15 +52,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	 public UserApp save(UserDto userDto) {
-		  UserApp user = new UserApp();
-	        user.setUserName(userDto.getUserName());
-	        user.setEmail(userDto.getEmail());
-	        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-	        return userRepository.save(user);
-	    }
+	public UserApp saveDto(UserDto userDto) {
+		UserApp user = new UserApp();
+		user.setUserName(userDto.getUserName());
+		user.setEmail(userDto.getEmail());
+		user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+		return userRepository.save(user);
+	}
+
+	@Override
+	public Integer saveUser(UserApp user) {
+		 if (user != null) {
+	           UserApp newUser = new UserApp();
+	            newUser.setUserName(user.getUserName());
+	            newUser.setEmail(user.getEmail());
+	            newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	            return userRepository.save(newUser).getId();
+	        }
+	        return null;
+	}
 }
-
-	
-
-

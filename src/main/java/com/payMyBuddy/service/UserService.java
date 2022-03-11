@@ -18,5 +18,6 @@ public interface UserService {
 
 	public void deleteByEmail(String email);
 
-	public UserApp save(UserDto userDto);
+	public UserApp saveDto(UserDto userDto);
+	public Integer saveUser(UserApp user);
 }

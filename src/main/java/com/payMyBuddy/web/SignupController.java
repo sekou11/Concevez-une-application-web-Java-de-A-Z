@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.payMyBuddy.Models.UserApp;
@@ -14,7 +13,7 @@ import com.payMyBuddy.Models.dto.UserDto;
 import com.payMyBuddy.Service.UserService;
 
 @Controller
-@RequestMapping("/signup")
+//@RequestMapping("/signup")
 public class SignupController {
     private UserService userService;
 	
@@ -25,12 +24,12 @@ public class SignupController {
 		this.userService = userService;
 	}
 
-	@GetMapping
+	@GetMapping("/signup")
     public String signupView() {
         return "signup";
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     private String signupUser(@ModelAttribute UserDto user,
     		Model model, RedirectAttributes redirAttrs) {
         String signupError = null;
@@ -39,7 +38,7 @@ public class SignupController {
             signupError = "The email already exists";
         }
         if (signupError == null) {
-           userService.save(user);
+           userService.saveDto(user);
         }
 
         if (signupError == null) {
